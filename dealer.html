@@ -1,0 +1,1132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dealer Partner Portal - InsurePro</title>
+    <meta name="description" content="Join our dealer partner program and earn competitive commissions on vehicle insurance sales. Access tools, training, and support.">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Core Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.4.0/echarts.min.js"></script>
+    
+    <!-- Custom Styles -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        :root {
+            --primary: #1a365d;
+            --secondary: #ed8936;
+            --accent: #f7fafc;
+            --text: #2d3748;
+            --success: #38a169;
+            --warning: #d69e2e;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--text);
+        }
+        
+        .dealer-card {
+            transition: all 0.3s ease;
+        }
+        
+        .dealer-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), #2d5a87);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(26, 54, 93, 0.3);
+        }
+        
+        .btn-secondary {
+            background: linear-gradient(135deg, var(--secondary), #f6ad55);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-secondary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(237, 137, 54, 0.3);
+        }
+        
+        .scroll-animate {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+        
+        .scroll-animate.animate-fade-in-up {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .commission-tier {
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .commission-tier:hover {
+            border-color: var(--primary);
+            transform: scale(1.02);
+        }
+        
+        .commission-tier.selected {
+            border-color: var(--primary);
+            background: linear-gradient(135deg, rgba(26, 54, 93, 0.05), rgba(26, 54, 93, 0.02));
+        }
+        
+        .progress-bar {
+            transition: width 0.3s ease;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+        }
+        
+        .nav-tab {
+            transition: all 0.3s ease;
+            border-bottom: 2px solid transparent;
+        }
+        
+        .nav-tab.active {
+            border-bottom-color: var(--primary);
+            color: var(--primary);
+        }
+        
+        .nav-tab:hover {
+            color: var(--primary);
+        }
+        
+        .form-step {
+            transition: all 0.3s ease;
+        }
+        
+        .step-indicator {
+            transition: all 0.3s ease;
+        }
+        
+        .step-indicator.active {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .step-indicator.completed {
+            background-color: var(--success);
+            color: white;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg fixed w-full top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <a href="index.html" class="text-2xl font-bold text-blue-600">InsurePro</a>
+                    </div>
+                </div>
+                
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="index.html" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">Home</a>
+                        <a href="plans.html" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">Plans</a>
+                        <a href="claims.html" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">Claims</a>
+                        <a href="dashboard.html" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">Dashboard</a>
+                        <a href="dealer.html" class="text-gray-900 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">Partners</a>
+                    </div>
+                </div>
+                
+                <div class="md:hidden">
+                    <button class="mobile-menu-btn text-gray-700 hover:text-blue-600 p-2">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile menu -->
+        <div class="mobile-menu hidden md:hidden">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white border-t">
+                <a href="index.html" class="block px-3 py-2 text-gray-700 hover:text-blue-600">Home</a>
+                <a href="plans.html" class="block px-3 py-2 text-gray-700 hover:text-blue-600">Plans</a>
+                <a href="claims.html" class="block px-3 py-2 text-gray-700 hover:text-blue-600">Claims</a>
+                <a href="dashboard.html" class="block px-3 py-2 text-gray-700 hover:text-blue-600">Dashboard</a>
+                <a href="dealer.html" class="block px-3 py-2 text-gray-900 hover:text-blue-600">Partners</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-r from-blue-600 to-blue-800 pt-24 pb-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 class="text-5xl font-bold text-white mb-6">Dealer Partner Portal</h1>
+            <p class="text-xl text-blue-100 mb-8 max-w-3xl mx-auto">
+                Join our exclusive dealer network and earn competitive commissions while providing exceptional insurance solutions to your customers.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <button onclick="document.getElementById('signup-form').scrollIntoView({behavior: 'smooth'})" 
+                        class="btn-secondary text-white px-8 py-4 rounded-lg font-semibold text-lg">
+                    Become a Partner
+                </button>
+                <a href="#commission-calculator" class="bg-transparent border-2 border-white text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-white hover:text-blue-600 transition-colors">
+                    Calculate Earnings
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 scroll-animate">
+                <h2 class="text-4xl font-bold text-gray-900 mb-4">Why Partner with InsurePro?</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Unlock new revenue streams and enhance your customer experience with our comprehensive dealer partnership program.
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="dealer-card bg-white p-8 rounded-xl shadow-lg border border-gray-100 scroll-animate">
+                    <div class="w-16 h-16 bg-blue-100 rounded-lg flex items-center justify-center mb-6">
+                        <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-4">Competitive Commissions</h3>
+                    <p class="text-gray-600 mb-4">
+                        Earn up to 20% commission on insurance policies sold through your dealership with transparent tracking and timely payouts.
+                    </p>
+                    <div class="text-2xl font-bold text-blue-600">Up to 20%</div>
+                    <div class="text-sm text-gray-500">Commission Rate</div>
+                </div>
+                
+                <div class="dealer-card bg-white p-8 rounded-xl shadow-lg border border-gray-100 scroll-animate">
+                    <div class="w-16 h-16 bg-green-100 rounded-lg flex items-center justify-center mb-6">
+                        <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-4">Fast Processing</h3>
+                    <p class="text-gray-600 mb-4">
+                        Quick claim settlements and policy processing ensure your customers get the best service experience.
+                    </p>
+                    <div class="text-2xl font-bold text-green-600">95%</div>
+                    <div class="text-sm text-gray-500">Claims Settled in 7 Days</div>
+                </div>
+                
+                <div class="dealer-card bg-white p-8 rounded-xl shadow-lg border border-gray-100 scroll-animate">
+                    <div class="w-16 h-16 bg-purple-100 rounded-lg flex items-center justify-center mb-6">
+                        <svg class="w-8 h-8 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-4">Advanced Analytics</h3>
+                    <p class="text-gray-600 mb-4">
+                        Access comprehensive dashboards with real-time performance metrics, sales tracking, and customer insights.
+                    </p>
+                    <div class="text-2xl font-bold text-purple-600">24/7</div>
+                    <div class="text-sm text-gray-500">Dashboard Access</div>
+                </div>
+                
+                <div class="dealer-card bg-white p-8 rounded-xl shadow-lg border border-gray-100 scroll-animate">
+                    <div class="w-16 h-16 bg-orange-100 rounded-lg flex items-center justify-center mb-6">
+                        <svg class="w-8 h-8 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-4">Training & Support</h3>
+                    <p class="text-gray-600 mb-4">
+                        Comprehensive training programs, marketing materials, and dedicated support to help you succeed.
+                    </p>
+                    <div class="text-2xl font-bold text-orange-600">100%</div>
+                    <div class="text-sm text-gray-500">Free Training</div>
+                </div>
+                
+                <div class="dealer-card bg-white p-8 rounded-xl shadow-lg border border-gray-100 scroll-animate">
+                    <div class="w-16 h-16 bg-red-100 rounded-lg flex items-center justify-center mb-6">
+                        <svg class="w-8 h-8 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-4">Trusted Brand</h3>
+                    <p class="text-gray-600 mb-4">
+                        Partner with a reputable insurance broker trusted by thousands of customers and licensed in all 50 states.
+                    </p>
+                    <div class="text-2xl font-bold text-red-600">50+</div>
+                    <div class="text-sm text-gray-500">States Licensed</div>
+                </div>
+                
+                <div class="dealer-card bg-white p-8 rounded-xl shadow-lg border border-gray-100 scroll-animate">
+                    <div class="w-16 h-16 bg-indigo-100 rounded-lg flex items-center justify-center mb-6">
+                        <svg class="w-8 h-8 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-4">Dedicated Account Manager</h3>
+                    <p class="text-gray-600 mb-4">
+                        Get personalized support from a dedicated account manager who understands your business needs.
+                    </p>
+                    <div class="text-2xl font-bold text-indigo-600">1:1</div>
+                    <div class="text-sm text-gray-500">Personal Support</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Commission Structure Section -->
+    <section class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 scroll-animate">
+                <h2 class="text-4xl font-bold text-gray-900 mb-4">Commission Structure</h2>
+                <p class="text-xl text-gray-600">
+                    Choose the commission tier that best fits your dealership's volume and goals.
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="commission-tier bg-white p-8 rounded-xl shadow-lg cursor-pointer" data-tier="starter">
+                    <div class="text-center mb-8">
+                        <h3 class="text-2xl font-bold text-gray-900 mb-2">Starter</h3>
+                        <p class="text-gray-600 mb-6">Perfect for new partnerships</p>
+                        <div class="mb-6">
+                            <span class="text-4xl font-bold text-blue-600">10%</span>
+                            <span class="text-gray-500">commission</span>
+                        </div>
+                        <ul class="text-left space-y-2 mb-6">
+                            <li class="flex items-center">
+                                <svg class="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                </svg>
+                                <span>Basic commission structure</span>
+                            </li>
+                            <li class="flex items-center">
+                                <svg class="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                </svg>
+                                <span>Monthly payouts</span>
+                            </li>
+                            <li class="flex items-center">
+                                <svg class="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                </svg>
+                                <span>Online dashboard access</span>
+                            </li>
+                            <li class="flex items-center">
+                                <svg class="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                </svg>
+                                <span>Email support</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="commission-tier bg-white p-8 rounded-xl shadow-lg cursor-pointer border-2 border-blue-500 relative" data-tier="professional">
+                    <div class="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                        <span class="bg-blue-500 text-white px-4 py-1 rounded-full text-sm font-semibold">Most Popular</span>
+                    </div>
+                    
+                    <div class="text-center mb-8">
+                        <h3 class="text-2xl font-bold text-gray-900 mb-2">Professional</h3>
+                        <p class="text-gray-600 mb-6">For established dealerships</p>
+                        <div class="mb-6">
+                            <span class="text-4xl font-bold text-blue-600">15%</span>
+                            <span class="text-gray-500">commission</span>
+                        </div>
+                        <ul class="text-left space-y-2 mb-6">
+                            <li class="flex items-center">
+                                <svg class="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                </svg>
+                                <span>Enhanced commission rate</span>
+                            </li>
+                            <li class="flex items-center">
+                                <svg class="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                </svg>
+                                <span>Weekly payouts</span>
+                            </li>
+                            <li class="flex items-center">
+                                <svg class="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                </svg>
+                                <span>Premium dashboard features</span>
+                            </li>
+                            <li class="flex items-center">
+                                <svg class="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                </svg>
+                                <span>Priority phone support</span>
+                            </li>
+                            <li class="flex items-center">
+                                <svg class="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                </svg>
+                                <span>Marketing materials</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="commission-tier bg-white p-8 rounded-xl shadow-lg cursor-pointer" data-tier="enterprise">
+                    <div class="text-center mb-8">
+                        <h3 class="text-2xl font-bold text-gray-900 mb-2">Enterprise</h3>
+                        <p class="text-gray-600 mb-6">For high-volume dealers</p>
+                        <div class="mb-6">
+                            <span class="text-4xl font-bold text-blue-600">20%</span>
+                            <span class="text-gray-500">commission</span>
+                        </div>
+                        <ul class="text-left space-y-2 mb-6">
+                            <li class="flex items-center">
+                                <svg class="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                </svg>
+                                <span>Maximum commission rate</span>
+                            </li>
+                            <li class="flex items-center">
+                                <svg class="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                </svg>
+                                <span>Daily payouts</span>
+                            </li>
+                            <li class="flex items-center">
+                                <svg class="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                </svg>
+                                <span>Advanced analytics</span>
+                            </li>
+                            <li class="flex items-center">
+                                <svg class="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                </svg>
+                                <span>Dedicated account manager</span>
+                            </li>
+                            <li class="flex items-center">
+                                <svg class="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                </svg>
+                                <span>Custom marketing support</span>
+                            </li>
+                            <li class="flex items-center">
+                                <svg class="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                </svg>
+                                <span>API integration</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Commission Calculator Section -->
+    <section id="commission-calculator" class="py-20 bg-white">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12 scroll-animate">
+                <h2 class="text-4xl font-bold text-gray-900 mb-4">Commission Calculator</h2>
+                <p class="text-xl text-gray-600">
+                    Estimate your potential earnings based on your dealership's sales volume.
+                </p>
+            </div>
+            
+            <div class="bg-gray-50 p-8 rounded-2xl scroll-animate">
+                <div id="commission-calculator">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Monthly Vehicle Sales</label>
+                            <input type="number" id="policies-sold" value="50" min="1" 
+                                   class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Average Policy Value</label>
+                            <input type="number" id="avg-premium" value="1200" min="100" step="100"
+                                   class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Commission Rate</label>
+                            <select id="commission-rate" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                <option value="10">Starter (10%)</option>
+                                <option value="15" selected>Professional (15%)</option>
+                                <option value="20">Enterprise (20%)</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="text-center bg-white p-8 rounded-xl shadow-lg">
+                        <div class="text-sm text-gray-600 mb-2">Estimated Monthly Commission</div>
+                        <div id="commission-result" class="text-4xl font-bold text-blue-600 mb-4">$9,000</div>
+                        <div class="text-sm text-gray-600 mb-6">Based on your current settings</div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+                            <div class="text-center">
+                                <div class="font-semibold text-gray-900">Annual Commission</div>
+                                <div id="annual-commission" class="text-blue-600 font-bold">$108,000</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="font-semibold text-gray-900">Total Policies/Year</div>
+                                <div class="text-blue-600 font-bold">600</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="font-semibold text-gray-900">Conversion Rate</div>
+                                <div class="text-blue-600 font-bold">25%</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Signup Form Section -->
+    <section id="signup-form" class="py-20 bg-gray-50">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12 scroll-animate">
+                <h2 class="text-4xl font-bold text-gray-900 mb-4">Become a Partner</h2>
+                <p class="text-xl text-gray-600">
+                    Join our dealer network in just a few simple steps.
+                </p>
+            </div>
+            
+            <!-- Progress Indicator -->
+            <div class="flex justify-center mb-8 scroll-animate">
+                <div class="flex items-center space-x-4">
+                    <div class="step-indicator active w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center font-semibold">1</div>
+                    <div class="w-16 h-1 bg-gray-300"></div>
+                    <div class="step-indicator w-10 h-10 rounded-full bg-gray-300 text-gray-600 flex items-center justify-center font-semibold">2</div>
+                    <div class="w-16 h-1 bg-gray-300"></div>
+                    <div class="step-indicator w-10 h-10 rounded-full bg-gray-300 text-gray-600 flex items-center justify-center font-semibold">3</div>
+                </div>
+            </div>
+            
+            <form id="dealer-signup-form" class="bg-white rounded-2xl shadow-lg p-8 scroll-animate">
+                
+                <!-- Step 1: Basic Information -->
+                <div class="form-step" id="dealer-step-1">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-6 text-center">Dealership Information</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Dealership Name *</label>
+                            <input type="text" name="dealership-name" required 
+                                   class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Contact Person *</label>
+                            <input type="text" name="contact-person" required 
+                                   class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Email Address *</label>
+                            <input type="email" name="email" required 
+                                   class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Phone Number *</label>
+                            <input type="tel" name="phone" required 
+                                   class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Dealership Type *</label>
+                            <select name="dealership-type" required 
+                                    class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                <option value="">Select Type</option>
+                                <option value="new-car">New Car Dealership</option>
+                                <option value="used-car">Used Car Dealership</option>
+                                <option value="both">Both New & Used</option>
+                                <option value="motorcycle">Motorcycle Dealership</option>
+                                <option value="commercial">Commercial Vehicle Dealer</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Years in Business *</label>
+                            <select name="years-in-business" required 
+                                    class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                <option value="">Select Range</option>
+                                <option value="0-1">Less than 1 year</option>
+                                <option value="1-3">1-3 years</option>
+                                <option value="3-5">3-5 years</option>
+                                <option value="5-10">5-10 years</option>
+                                <option value="10+">10+ years</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-end mt-8">
+                        <button type="button" class="next-dealer-step btn-primary text-white px-8 py-3 rounded-lg font-semibold">
+                            Next Step
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Step 2: Business Details -->
+                <div class="form-step hidden" id="dealer-step-2">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-6 text-center">Business Details</h3>
+                    <div class="space-y-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Business Address *</label>
+                            <textarea name="business-address" required rows="3" 
+                                      class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"></textarea>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">City *</label>
+                                <input type="text" name="city" required 
+                                       class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">State *</label>
+                                <select name="state" required 
+                                        class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                    <option value="">Select State</option>
+                                    <option value="AL">Alabama</option>
+                                    <option value="AK">Alaska</option>
+                                    <option value="AZ">Arizona</option>
+                                    <option value="AR">Arkansas</option>
+                                    <option value="CA">California</option>
+                                    <option value="CO">Colorado</option>
+                                    <option value="CT">Connecticut</option>
+                                    <option value="DE">Delaware</option>
+                                    <option value="FL">Florida</option>
+                                    <option value="GA">Georgia</option>
+                                    <option value="HI">Hawaii</option>
+                                    <option value="ID">Idaho</option>
+                                    <option value="IL">Illinois</option>
+                                    <option value="IN">Indiana</option>
+                                    <option value="IA">Iowa</option>
+                                    <option value="KS">Kansas</option>
+                                    <option value="KY">Kentucky</option>
+                                    <option value="LA">Louisiana</option>
+                                    <option value="ME">Maine</option>
+                                    <option value="MD">Maryland</option>
+                                    <option value="MA">Massachusetts</option>
+                                    <option value="MI">Michigan</option>
+                                    <option value="MN">Minnesota</option>
+                                    <option value="MS">Mississippi</option>
+                                    <option value="MO">Missouri</option>
+                                    <option value="MT">Montana</option>
+                                    <option value="NE">Nebraska</option>
+                                    <option value="NV">Nevada</option>
+                                    <option value="NH">New Hampshire</option>
+                                    <option value="NJ">New Jersey</option>
+                                    <option value="NM">New Mexico</option>
+                                    <option value="NY">New York</option>
+                                    <option value="NC">North Carolina</option>
+                                    <option value="ND">North Dakota</option>
+                                    <option value="OH">Ohio</option>
+                                    <option value="OK">Oklahoma</option>
+                                    <option value="OR">Oregon</option>
+                                    <option value="PA">Pennsylvania</option>
+                                    <option value="RI">Rhode Island</option>
+                                    <option value="SC">South Carolina</option>
+                                    <option value="SD">South Dakota</option>
+                                    <option value="TN">Tennessee</option>
+                                    <option value="TX">Texas</option>
+                                    <option value="UT">Utah</option>
+                                    <option value="VT">Vermont</option>
+                                    <option value="VA">Virginia</option>
+                                    <option value="WA">Washington</option>
+                                    <option value="WV">West Virginia</option>
+                                    <option value="WI">Wisconsin</option>
+                                    <option value="WY">Wyoming</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">ZIP Code *</label>
+                                <input type="text" name="zip-code" required 
+                                       class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Tax ID/EIN *</label>
+                                <input type="text" name="tax-id" required 
+                                       class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                            </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Monthly Vehicle Sales *</label>
+                                <select name="monthly-sales" required 
+                                        class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                    <option value="">Select Range</option>
+                                    <option value="1-25">1-25 vehicles</option>
+                                    <option value="26-50">26-50 vehicles</option>
+                                    <option value="51-100">51-100 vehicles</option>
+                                    <option value="101-200">101-200 vehicles</option>
+                                    <option value="200+">200+ vehicles</option>
+                                </select>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Preferred Commission Tier *</label>
+                                <select name="commission-tier" required 
+                                        class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                    <option value="">Select Tier</option>
+                                    <option value="starter">Starter (10%)</option>
+                                    <option value="professional">Professional (15%)</option>
+                                    <option value="enterprise">Enterprise (20%)</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-between mt-8">
+                        <button type="button" class="prev-dealer-step btn-secondary text-white px-8 py-3 rounded-lg font-semibold">
+                            Previous
+                        </button>
+                        <button type="button" class="next-dealer-step btn-primary text-white px-8 py-3 rounded-lg font-semibold">
+                            Next Step
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Step 3: Agreement & Submit -->
+                <div class="form-step hidden" id="dealer-step-3">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-6 text-center">Agreement & Submission</h3>
+                    
+                    <div class="bg-blue-50 p-6 rounded-lg mb-8">
+                        <h4 class="font-semibold text-blue-900 mb-4">Partnership Agreement Summary</h4>
+                        <div class="space-y-2 text-sm text-blue-800">
+                            <p>• Commission payments are made according to your selected tier</p>
+                            <p>• All policies must be sold in compliance with state regulations</p>
+                            <p>• Training completion is required before selling insurance products</p>
+                            <p>• InsurePro reserves the right to modify commission rates with 30-day notice</p>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-4 mb-8">
+                        <label class="flex items-start">
+                            <input type="checkbox" name="terms-agreement" required class="mr-3 mt-1">
+                            <span class="text-sm text-gray-700">
+                                I agree to the <a href="#" class="text-blue-600 hover:text-blue-800">Partnership Terms & Conditions</a> and confirm that all information provided is accurate and complete.
+                            </span>
+                        </label>
+                        
+                        <label class="flex items-start">
+                            <input type="checkbox" name="training-agreement" required class="mr-3 mt-1">
+                            <span class="text-sm text-gray-700">
+                                I agree to complete the required training program before selling insurance products through my dealership.
+                            </span>
+                        </label>
+                        
+                        <label class="flex items-start">
+                            <input type="checkbox" name="marketing-agreement" class="mr-3 mt-1">
+                            <span class="text-sm text-gray-700">
+                                I would like to receive marketing materials and updates about new products and promotions.
+                            </span>
+                        </label>
+                    </div>
+                    
+                    <div class="flex justify-between">
+                        <button type="button" class="prev-dealer-step btn-secondary text-white px-8 py-3 rounded-lg font-semibold">
+                            Previous
+                        </button>
+                        <button type="submit" class="btn-primary text-white px-8 py-3 rounded-lg font-semibold">
+                            Submit Application
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- Demo Dashboard Section -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 scroll-animate">
+                <h2 class="text-4xl font-bold text-gray-900 mb-4">Partner Dashboard Preview</h2>
+                <p class="text-xl text-gray-600">
+                    See what you'll have access to as an InsurePro dealer partner.
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                
+                <!-- Left Column -->
+                <div class="lg:col-span-2 space-y-8">
+                    
+                    <!-- Performance Overview -->
+                    <div class="dealer-card bg-white p-6 rounded-xl shadow-lg scroll-animate">
+                        <h3 class="text-xl font-bold text-gray-900 mb-6">Performance Overview</h3>
+                        <div id="dealer-performance-chart" style="height: 300px;"></div>
+                    </div>
+                    
+                    <!-- Recent Sales -->
+                    <div class="dealer-card bg-white p-6 rounded-xl shadow-lg scroll-animate">
+                        <h3 class="text-xl font-bold text-gray-900 mb-6">Recent Sales</h3>
+                        <div class="overflow-x-auto">
+                            <table class="w-full">
+                                <thead>
+                                    <tr class="border-b border-gray-200">
+                                        <th class="text-left py-3 px-4 font-semibold text-gray-900">Date</th>
+                                        <th class="text-left py-3 px-4 font-semibold text-gray-900">Customer</th>
+                                        <th class="text-left py-3 px-4 font-semibold text-gray-900">Policy</th>
+                                        <th class="text-left py-3 px-4 font-semibold text-gray-900">Premium</th>
+                                        <th class="text-left py-3 px-4 font-semibold text-gray-900">Commission</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="border-b border-gray-100">
+                                        <td class="py-3 px-4 text-sm text-gray-600">Nov 20, 2024</td>
+                                        <td class="py-3 px-4 text-sm text-gray-900">John Smith</td>
+                                        <td class="py-3 px-4 text-sm text-gray-600">Honda Civic</td>
+                                        <td class="py-3 px-4 text-sm text-gray-900">$1,200</td>
+                                        <td class="py-3 px-4 text-sm text-green-600 font-semibold">$180</td>
+                                    </tr>
+                                    <tr class="border-b border-gray-100">
+                                        <td class="py-3 px-4 text-sm text-gray-600">Nov 19, 2024</td>
+                                        <td class="py-3 px-4 text-sm text-gray-900">Sarah Johnson</td>
+                                        <td class="py-3 px-4 text-sm text-gray-600">Toyota Camry</td>
+                                        <td class="py-3 px-4 text-sm text-gray-900">$1,350</td>
+                                        <td class="py-3 px-4 text-sm text-green-600 font-semibold">$202</td>
+                                    </tr>
+                                    <tr class="border-b border-gray-100">
+                                        <td class="py-3 px-4 text-sm text-gray-600">Nov 18, 2024</td>
+                                        <td class="py-3 px-4 text-sm text-gray-900">Mike Chen</td>
+                                        <td class="py-3 px-4 text-sm text-gray-600">Ford F-150</td>
+                                        <td class="py-3 px-4 text-sm text-gray-900">$1,800</td>
+                                        <td class="py-3 px-4 text-sm text-green-600 font-semibold">$270</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Right Column -->
+                <div class="space-y-8">
+                    
+                    <!-- Commission Summary -->
+                    <div class="dealer-card bg-white p-6 rounded-xl shadow-lg scroll-animate">
+                        <h3 class="text-lg font-bold text-gray-900 mb-4">Commission Summary</h3>
+                        <div class="space-y-4">
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">This Month</span>
+                                <span class="font-semibold text-gray-900">$4,250</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Last Month</span>
+                                <span class="font-semibold text-gray-900">$3,890</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">This Year</span>
+                                <span class="font-semibold text-gray-900">$42,180</span>
+                            </div>
+                            <div class="border-t pt-4">
+                                <div class="flex justify-between">
+                                    <span class="text-gray-600">Pending Payout</span>
+                                    <span class="font-semibold text-green-600">$1,240</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Quick Stats -->
+                    <div class="dealer-card bg-white p-6 rounded-xl shadow-lg scroll-animate">
+                        <h3 class="text-lg font-bold text-gray-900 mb-4">Quick Stats</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-center">
+                                <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                                    <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                    </svg>
+                                </div>
+                                <div class="ml-4">
+                                    <div class="text-2xl font-bold text-gray-900">127</div>
+                                    <div class="text-sm text-gray-600">Policies Sold</div>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center">
+                                <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+                                    <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                                    </svg>
+                                </div>
+                                <div class="ml-4">
+                                    <div class="text-2xl font-bold text-gray-900">$42,180</div>
+                                    <div class="text-sm text-gray-600">Total Commission</div>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center">
+                                <div class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center">
+                                    <svg class="w-6 h-6 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 8v8m-4-5v5m-4-2v2m-2 4h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                    </svg>
+                                </div>
+                                <div class="ml-4">
+                                    <div class="text-2xl font-bold text-gray-900">18.5%</div>
+                                    <div class="text-sm text-gray-600">Conversion Rate</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Quick Actions -->
+                    <div class="dealer-card bg-white p-6 rounded-xl shadow-lg scroll-animate">
+                        <h3 class="text-lg font-bold text-gray-900 mb-4">Quick Actions</h3>
+                        <div class="space-y-3">
+                            <button class="block w-full btn-primary text-white px-4 py-3 rounded-lg font-semibold text-center text-sm">
+                                Generate Quote
+                            </button>
+                            <button class="block w-full bg-gray-100 text-gray-700 px-4 py-3 rounded-lg font-semibold text-center text-sm hover:bg-gray-200 transition-colors">
+                                View Reports
+                            </button>
+                            <button class="block w-full bg-gray-100 text-gray-700 px-4 py-3 rounded-lg font-semibold text-center text-sm hover:bg-gray-200 transition-colors">
+                                Download Materials
+                            </button>
+                            <button class="block w-full bg-gray-100 text-gray-700 px-4 py-3 rounded-lg font-semibold text-center text-sm hover:bg-gray-200 transition-colors">
+                                Contact Support
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-2xl font-bold mb-4 text-blue-400">InsurePro</h3>
+                    <p class="text-gray-400 mb-4">
+                        Your trusted partner for vehicle insurance claims and brokerage services.
+                    </p>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-gray-400 hover:text-white transition-colors">Home</a></li>
+                        <li><a href="plans.html" class="text-gray-400 hover:text-white transition-colors">Plans</a></li>
+                        <li><a href="claims.html" class="text-gray-400 hover:text-white transition-colors">Claims</a></li>
+                        <li><a href="dashboard.html" class="text-gray-400 hover:text-white transition-colors">Dashboard</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Support</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Help Center</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Contact Us</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Privacy Policy</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Terms of Service</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Contact Info</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li>📞 1-800-INSURE-1</li>
+                        <li>📧 support@insurepro.com</li>
+                        <li>🏢 123 Insurance Ave, Suite 100</li>
+                        <li>🌐 www.insurepro.com</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2024 InsurePro. All rights reserved. Licensed insurance broker in all 50 states.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="main.js"></script>
+    
+    <script>
+        // Commission tier selection
+        document.querySelectorAll('.commission-tier').forEach(tier => {
+            tier.addEventListener('click', () => {
+                document.querySelectorAll('.commission-tier').forEach(t => t.classList.remove('selected'));
+                tier.classList.add('selected');
+                
+                // Update commission calculator
+                const tierValue = tier.dataset.tier;
+                const rates = { starter: 10, professional: 15, enterprise: 20 };
+                document.getElementById('commission-rate').value = rates[tierValue];
+                
+                // Trigger calculation update
+                document.getElementById('commission-rate').dispatchEvent(new Event('change'));
+            });
+        });
+        
+        // Multi-step form handling
+        let currentDealerStep = 1;
+        const totalDealerSteps = 3;
+        
+        function showDealerStep(step) {
+            // Hide all steps
+            document.querySelectorAll('.form-step').forEach(s => s.classList.add('hidden'));
+            // Show current step
+            document.getElementById(`dealer-step-${step}`).classList.remove('hidden');
+            
+            // Update progress indicators
+            document.querySelectorAll('.step-indicator').forEach((indicator, index) => {
+                if (index + 1 < step) {
+                    indicator.className = 'step-indicator completed w-10 h-10 rounded-full bg-green-500 text-white flex items-center justify-center font-semibold';
+                } else if (index + 1 === step) {
+                    indicator.className = 'step-indicator active w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center font-semibold';
+                } else {
+                    indicator.className = 'step-indicator w-10 h-10 rounded-full bg-gray-300 text-gray-600 flex items-center justify-center font-semibold';
+                }
+            });
+        }
+        
+        document.querySelectorAll('.next-dealer-step').forEach(btn => {
+            btn.addEventListener('click', () => {
+                if (currentDealerStep < totalDealerSteps) {
+                    currentDealerStep++;
+                    showDealerStep(currentDealerStep);
+                }
+            });
+        });
+        
+        document.querySelectorAll('.prev-dealer-step').forEach(btn => {
+            btn.addEventListener('click', () => {
+                if (currentDealerStep > 1) {
+                    currentDealerStep--;
+                    showDealerStep(currentDealerStep);
+                }
+            });
+        });
+        
+        // Form submission
+        document.getElementById('dealer-signup-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // Show success modal
+            const modal = document.createElement('div');
+            modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
+            modal.innerHTML = `
+                <div class="bg-white p-8 rounded-lg max-w-md w-full mx-4 text-center">
+                    <div class="text-green-500 text-6xl mb-4">✓</div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-4">Application Submitted!</h3>
+                    <p class="text-gray-600 mb-6">
+                        Thank you for your interest in our dealer partnership program. Our team will review your application and contact you within 2-3 business days.
+                    </p>
+                    <div class="bg-blue-50 p-4 rounded-lg mb-6">
+                        <p class="text-sm text-blue-800">
+                            <strong>Application Reference:</strong> DLR-${Date.now().toString().slice(-6)}
+                        </p>
+                    </div>
+                    <button onclick="modal.remove()" 
+                            class="btn-primary text-white px-6 py-3 rounded-lg font-semibold w-full">
+                        Close
+                    </button>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+        });
+        
+        // Initialize dealer performance chart
+        document.addEventListener('DOMContentLoaded', () => {
+            if (typeof echarts !== 'undefined') {
+                const chartDom = document.getElementById('dealer-performance-chart');
+                if (chartDom) {
+                    const myChart = echarts.init(chartDom);
+                    const option = {
+                        title: {
+                            text: 'Monthly Sales Performance',
+                            textStyle: {
+                                fontSize: 14,
+                                fontWeight: 'normal'
+                            }
+                        },
+                        tooltip: {
+                            trigger: 'axis'
+                        },
+                        legend: {
+                            data: ['Policies Sold', 'Commission Earned'],
+                            bottom: 0
+                        },
+                        xAxis: {
+                            type: 'category',
+                            data: ['Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov']
+                        },
+                        yAxis: [
+                            {
+                                type: 'value',
+                                name: 'Policies',
+                                position: 'left'
+                            },
+                            {
+                                type: 'value',
+                                name: 'Commission ($)',
+                                position: 'right'
+                            }
+                        ],
+                        series: [
+                            {
+                                name: 'Policies Sold',
+                                type: 'bar',
+                                data: [18, 22, 25, 20, 28, 24],
+                                itemStyle: {
+                                    color: '#3b82f6'
+                                }
+                            },
+                            {
+                                name: 'Commission Earned',
+                                type: 'line',
+                                yAxisIndex: 1,
+                                data: [3240, 3960, 4500, 3600, 5040, 4320],
+                                smooth: true,
+                                lineStyle: {
+                                    color: '#10b981'
+                                }
+                            }
+                        ]
+                    };
+                    
+                    myChart.setOption(option);
+                }
+            }
+        });
+        
+        // Scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-fade-in-up');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.scroll-animate').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
